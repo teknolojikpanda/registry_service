@@ -6,7 +6,7 @@ def version
 end
 
 def latest_hub_version
-  taginfo        = JSON.parse(HTTParty.get("https://hub.docker.com/v2/repositories/parabuzzle/craneoperator/tags/").body)['results']
+  taginfo        = JSON.parse(HTTParty.get("https://hub.docker.com/v2/repositories/teknolojikpanda/craneoperator/tags/").body)['results']
   tags = []
   taginfo.each do |tag|
     tags << tag['name']
@@ -19,22 +19,22 @@ def next_version
 end
 
 task :tag do
-  sh "docker tag -f parabuzzle/craneoperator:latest parabuzzle/craneoperator:#{next_version}"
-  sh "docker tag -f parabuzzle/craneoperator:latest parabuzzle/docker-registry-ui:latest"
-  sh "docker tag -f parabuzzle/craneoperator:latest parabuzzle/docker-registry-ui:#{next_version}"
+  sh "docker tag -f teknolojikpanda/craneoperator:latest teknolojikpanda/craneoperator:#{next_version}"
+  sh "docker tag -f teknolojikpanda/craneoperator:latest teknolojikpanda/docker-registry-ui:latest"
+  sh "docker tag -f teknolojikpanda/craneoperator:latest teknolojikpanda/docker-registry-ui:#{next_version}"
 end
 
 desc "Push to Dockerhub"
 task :push => :tag do
-  sh "docker push parabuzzle/craneoperator:#{next_version}"
-  sh "docker push parabuzzle/craneoperator:latest"
-  sh "docker push parabuzzle/docker-registry-ui:#{next_version}"
-  sh "docker push parabuzzle/docker-registry-ui:latest"
+  sh "docker push teknolojikpanda/craneoperator:#{next_version}"
+  sh "docker push teknolojikpanda/craneoperator:latest"
+  sh "docker push teknolojikpanda/docker-registry-ui:#{next_version}"
+  sh "docker push teknolojikpanda/docker-registry-ui:latest"
 end
 
 desc "Build Container"
 task :build do
-  sh "docker build -t parabuzzle/craneoperator:latest ."
+  sh "docker build -t teknolojikpanda/craneoperator:latest ."
 end
 
 task :default => [:build]
@@ -44,7 +44,7 @@ private
 
   def get_next_version
     base           = version
-    taginfo        = JSON.parse(HTTParty.get("https://hub.docker.com/v2/repositories/parabuzzle/craneoperator/tags/").body)['results']
+    taginfo        = JSON.parse(HTTParty.get("https://hub.docker.com/v2/repositories/teknolojikpanda/craneoperator/tags/").body)['results']
     tags = []
     taginfo.each do |tag|
       tags << tag['name']

@@ -12,7 +12,7 @@ export default class Footer extends React.Component {
             Crane Operator browsing {this.props.registry.public_url}
           </Navbar.Text>
           <Navbar.Text pullRight>
-            <Navbar.Link href="https://github.com/parabuzzle/craneoperator" target="_blank">GitHub Project</Navbar.Link>
+            <Navbar.Link href="https://github.com/teknolojikpanda/craneoperator" target="_blank">GitHub Project</Navbar.Link>
           </Navbar.Text>
         </Navbar>
       </div>

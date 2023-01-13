@@ -35,7 +35,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/parabuzzle/craneop.git"
+    "url": "git+https://github.com/teknolojikpanda/craneop.git"
   },
   "keywords": [
     "docker",
@@ -45,7 +45,7 @@
   "author": "Michael Heijmans",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/parabuzzle/craneop/issues"
+    "url": "https://github.com/teknolojikpanda/craneop/issues"
   },
-  "homepage": "https://github.com/parabuzzle/craneop#readme"
+  "homepage": "https://github.com/teknolojikpanda/craneop#readme"
 }
