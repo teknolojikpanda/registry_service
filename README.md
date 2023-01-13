@@ -1,18 +1,10 @@
 # CraneOperator
 Just as crane operators can see where all the containers that are in the shipyard, CraneOp gives you a simple web interface for browsing around a Docker Registry running version 2.0+
 
-**VERSION 2.2 Includes a bunch of new requested features!**
+## What's new in Version 2.3?
 
-## What's new in Version 2.2?
-
-   * Filtering of container list
-   * Filtering of the tag list
-   * More layer info
-   * Permalinks!
-   * Login to the registry through the UI
-   * Default tag selection if there's only 1 tag for a container
-
-[![Circle CI](https://circleci.com/gh/parabuzzle/craneoperator.svg?style=svg)](https://circleci.com/gh/parabuzzle/craneoperator)
+   * ARM64 Support added.
+   * Debian docker image used instead of alpine.
 
 ![screenshots/crane_operator.png](screenshots/crane_operator.png)
 
@@ -23,14 +15,12 @@ When you run your own internal docker registry, it can be challenging to find ou
 ## How do I run it?
 
 ```
-docker run -d -p 80:80 parabuzzle/craneoperator:latest
+docker run -d
 ```
 
 ## How do I configure it?
 
 Available Environment Variables:
-
-*note: some variables changed in version 2.2*
 
   * **REGISTRY_HOST** - the registry host to browse (default: `localhost`)
   * **REGISTRY_PORT** - the port of the registry host (default: `5000`)
@@ -48,19 +38,3 @@ Available Environment Variables:
   * **REGISTRY_ALLOW_DELETE** - when set to true will expose the delete action on images (default: false)
     * note: you must enable delete actions on your registry.
     * note: some caching schemes may also cause deletes to occur but not be apparent in the UI right away
-
-
-
-```
-docker run -d \
-  -p 80:80 \
-  -e REGISTRY_HOST=registry.yourdomain.com \
-  -e REGISTRY_PORT=443 \
-  -e REGISTRY_PROTOCOL=https \
-  -e SSL_VERIFY=false \
-  -e ALLOW_REGISTRY_LOGIN=true \
-  -e REGISTRY_ALLOW_DELETE=true \
-  parabuzzle/craneoperator:latest
-```
-
-
