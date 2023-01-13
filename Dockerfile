@@ -1,32 +1,30 @@
-# This docker file sets up the rails app container
-#
-# https://docs.docker.com/reference/builder/
+FROM --platform=linux/arm64 ruby:2.3.6-stretch
+MAINTAINER Mike Heijmans <parabuzzle@gmail.com> - TeknolojikPanda <dogaucak@gmail.com>
 
-FROM ruby:2.6.0-alpine
-MAINTAINER Mike Heijmans <parabuzzle@gmail.com>
-
-# Add env variables
 ENV PORT=80 \
-    REGISTRY_HOST=localhost \
+    REGISTRY_HOST=172.18.0.2 \
     REGISTRY_PORT=5000 \
-    REGISTRY_PROTOCOL=https \
+    REGISTRY_PROTOCOL=http \
+    SSL_VERIFY=false \
+    ALLOW_REGISTRY_LOGIN=false \
     REGISTRY_SSL_VERIFY=true \
-    REGISTRY_ALLOW_DELETE=false \
+    REGISTRY_ALLOW_DELETE=true \
     APP_HOME=/webapp
 
 RUN mkdir -p $APP_HOME
-# switch to the application directory for exec commands
 WORKDIR $APP_HOME
 
-# Add the app
 COPY . $APP_HOME
 
-RUN apk add --update nodejs g++ musl-dev make linux-headers yarn && \
-    yarn install && \
+RUN apt update && \
+    curl -sL https://deb.nodesource.com/setup_8.x | bash -
+
+RUN apt install -y nodejs npm g++ musl-dev make build-essential && \
+    npm install --no-optional && \
     node_modules/.bin/webpack && \
     rm -rf node_modules && \
+    gem update bundler && \
     bundle install --deployment && \
-    apk del nodejs g++ musl-dev make linux-headers
+    apt remove -y nodejs g++ musl-dev make build-essential 
 
-# Run the app
 CMD ["bundle", "exec", "foreman", "start"]

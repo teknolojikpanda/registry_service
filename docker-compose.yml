@@ -1,10 +1,32 @@
-web:
-  build: .
-  volumes:
-    - .:/webapp
-  ports:
-    - "9998:80"
-  environment:
-    REGISTRY_PORT: 5000
-    REGISTRY_HOST: 192.168.99.100
-    REGISTRY_SSL_VERIFY: false
+services:
+  local_registry_ui:
+    image: teknolojikpanda/craneoperator:latest
+    container_name: local_registry_ui 
+    ports:
+      - 8086:80
+    depends_on:
+      - local_registry
+    networks:
+      net:
+        ipv4_address: 172.18.0.3
+    restart: always
+
+  local_registry:
+    image: registry:2
+    container_name: local_registry
+    ports:
+      - 5021:5000
+    networks:
+      net:
+        ipv4_address: 172.18.0.2
+    environment:
+      - REGISTRY_STORAGE_DELETE_ENABLED=true
+    restart: always
+
+networks:
+  net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.18.0.0/24
+          gateway: 172.18.0.1
